@@ -1,15 +1,20 @@
 import React from 'react'
 import './posts.css'
 import Post from './post/Post'
-import { useSelector } from 'react-redux'
+import Pagination from '../../components/pagination/Pagination'
 
 const Posts = () => {
-  const { show } = useSelector(state => state.modal)
-
   return (
     // media query
-    <div className={`posts-container ${!show ? 'mt' : ''}`} >
-      <Post show={show} />
+    <div className="posts-container-major">
+      <div className="posts-container" >
+        <Post />
+        <Post />
+        <Post />
+      </div>
+      <div className="pagination-container">
+        <Pagination />
+      </div>
     </div>
   )
 }

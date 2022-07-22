@@ -1,0 +1,16 @@
+.posts-creator-container {
+  text-align: center;
+  margin: 0 25vw;
+}
+
+.posts-creator {
+  text-align: center;
+  font-size: 18px;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem auto;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
+}
+
+.posts-creator span {
+  font-weight: bold;
+}

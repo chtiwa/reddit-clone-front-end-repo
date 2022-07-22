@@ -1,11 +1,19 @@
+.posts-container-major {
+  text-align: center;
+}
+
 .posts-container {
-  display: flex;
+  display: grid;
+  /* grid-template-columns: 1fr; */
   align-items: center;
   justify-content: center;
   height: 100%;
   width: 100%;
+  margin-top: 1rem;
 }
 
-.mt {
-  margin-top: 1rem;
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

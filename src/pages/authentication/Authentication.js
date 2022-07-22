@@ -1,16 +1,35 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './auth.css'
+import FileBase from 'react-file-base64'
 import { AiFillLock } from 'react-icons/ai'
 import { AiFillUnlock } from 'react-icons/ai'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { login, signup } from '../../redux/auth/authActions'
 
 const Authentication = () => {
   // at first it's signup
+  const dispatch = useDispatch()
+  const { isLoggedIn, error } = useSelector(state => state.auth)
+  const navigate = useNavigate()
   const [isLogin, setIsLogin] = useState(false)
   const [showPsw, setShowPsw] = useState(false)
-  const [formData, steFormData] = useState({ name: '', email: '', password: '', confirmPassword: '', image: '' })
+  const [formData, steFormData] = useState({ name: '', email: '', password: '', image: '' })
+
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/')
+    }
+  }, [isLoggedIn])
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (isLogin) {
+      dispatch(login(formData))
+    } else {
+      dispatch(signup(formData))
+    }
   }
 
   const handleChange = (e) => {
@@ -21,7 +40,6 @@ const Authentication = () => {
   return (
     <div className='auth'>
       <div className="auth-container">
-
         <div className="type">
           <span className={`login ${isLogin ? 'bg-orange-red' : 'bg-whitish'}`} onClick={() => setIsLogin(true)} >Login</span>
           <span className={`signup ${!isLogin ? 'bg-orange-red' : 'bg-whitish'}`} onClick={() => setIsLogin(false)} style={{ backgroundColor: `${!isLogin ? '#FF5700' : '#fefefe'}` }}>Signup</span>
@@ -45,9 +63,9 @@ const Authentication = () => {
               )}
             </div>
             {!isLogin && (
-              <div className="form-control">
-                {/* react file base64 */}
-                <input onChange={handleChange} type="file" name="image" value={formData.image} />
+              <div className="form-control-filebase">
+                <label htmlFor="fileInput">Choose a user image (optionnal) :</label>
+                <FileBase multiple={false} onDone={({ base64 }) => steFormData({ ...formData, image: base64 })} />
               </div>
             )}
             {isLogin && (

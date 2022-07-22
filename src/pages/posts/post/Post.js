@@ -1,18 +1,15 @@
 import React, { useState } from 'react'
 import './post.css'
-import Modal from './PostModal'
 import { ImArrowUp, ImArrowDown } from 'react-icons/im'
 import { FaRegCommentAlt } from 'react-icons/fa'
-import { useDispatch } from 'react-redux/es/exports'
-import { setShow } from '../../../redux/modal/modalReducer'
-
-const Post = ({ show }) => {
+const Post = () => {
   // the title description image date likes
   // when you click on the post it will open a modal that fetches the single post
   // the modal will be passed the info already fetched
-  const dispatch = useDispatch()
   const [like, setLike] = useState(false)
   const [dislike, setDislike] = useState(false)
+
+  // when clicked on the image or the comments it takes us to the single post page where we display the comments
 
   const handleLike = () => {
     setLike(!like)
@@ -25,8 +22,7 @@ const Post = ({ show }) => {
 
   return (
     <>
-      <Modal show={show} handleDislike={handleDislike} handleLike={handleLike} like={like} dislike={dislike} />
-      <div className="post-container" style={{ display: `${show ? 'none' : 'flex'}` }}>
+      <div className="post-container" >
         <div className="post-info">
           <div className="post-info-creator">
             <div className="avatar">
@@ -40,7 +36,7 @@ const Post = ({ show }) => {
             Title
           </div>
         </div>
-        <div className="post-img" onClick={() => dispatch(setShow())}>
+        <div className="post-img">
           <img src="https://images.pexels.com/photos/1170986/pexels-photo-1170986.jpeg?auto=compress&cs=tinysrgb&w=600" alt="img" />
         </div>
         <div className="post-features">

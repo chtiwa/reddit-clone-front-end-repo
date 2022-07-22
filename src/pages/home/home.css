@@ -1,6 +1,15 @@
 .home {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   overflow: hidden;
+}
+
+.home-posts-container {
+  flex: 6;
+}
+
+.tags {
+  flex: 1;
+  margin-top: 5rem;
 }

@@ -1,0 +1,144 @@
+.createpost-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.createpost-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+  border: 0;
+  width: 50vw;
+  border-radius: 5px;
+}
+
+.createpost-form:hover {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+}
+
+.createpost-form-group {
+  width: 100%;
+}
+
+.createpost-form-h2 {
+  text-align: center;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.6);
+  margin: 0 2rem 0.5rem 2rem;
+  padding: 0.2rem;
+}
+
+.createpost-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 0;
+  border-radius: 5px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+  margin: 0.5rem 0;
+  font-size: 18px;
+}
+
+.createpost-input:hover,
+.createpost-input:focus {
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
+  background-color: #f6f6f6;
+}
+
+.createpost-textarea {
+  resize: none;
+  border: 0;
+  font-size: 18px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+  width: 100%;
+  height: 180px;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.createpost-textarea:hover,
+.createpost-textarea:focus {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+  background-color: #f6f6f6;
+  outline: 0;
+  border: 0;
+}
+
+input[type=file] {
+  border: 0;
+  outline: 0;
+  border-radius: 5px;
+  font-family: 'Roboto', sans-serif;
+  font-style: none;
+}
+
+input[type=file]:hover,
+input[type=file]:focus {
+  border: 0;
+  outline: 0;
+  box-shadow: 0;
+}
+
+::-webkit-file-upload-button {
+  border: 0;
+  outline: 0;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  background-color: #FF5700;
+  color: #fff;
+  cursor: pointer;
+}
+
+::-webkit-file-upload-button:hover {
+  border: 0;
+  outline: 0;
+}
+
+.createpost-from-group-tags {
+  padding: 0.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: max-content;
+}
+
+.createpost-from-group-tag {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.2rem;
+  border-radius: 3px;
+  margin: 0.2rem;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+}
+
+.createpost-tag-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #ccc;
+  height: 20px;
+  width: 20px;
+  padding: 0.5rem;
+  margin-left: 0.2rem;
+  cursor: pointer;
+}
+
+.createpost-btn {
+  padding: 1rem 1.5rem;
+  font-size: 18px;
+  border: 0;
+  outline: 0;
+  border-radius: 5px;
+  background-color: #FF5700;
+  color: #fff;
+  cursor: pointer;
+}
+
+.createpost-btn:hover {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+}

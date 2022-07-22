@@ -21,3 +21,11 @@ button {
   border: 0;
   outline: 0;
 }
+
+input[type=file] {
+  border: 0;
+  outline: 0;
+  border-radius: 5px;
+  font-family: 'Roboto', sans-serif;
+  font-style: none;
+}
