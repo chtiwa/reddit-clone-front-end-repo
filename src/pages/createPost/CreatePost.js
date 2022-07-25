@@ -3,8 +3,10 @@ import FileBase from 'react-file-base64'
 import './createPost.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { createPost } from '../../redux/posts/postsActions'
+import { useNavigate } from 'react-router-dom'
 
 const CreatePost = () => {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { error } = useSelector(state => state.posts)
   const [form, setForm] = useState({ title: '', description: '', image: '' })
@@ -14,7 +16,7 @@ const CreatePost = () => {
     e.preventDefault()
     let newForm = { ...form, tags }
     // console.log(newForm)
-    dispatch(createPost(newForm))
+    dispatch(createPost(newForm, navigate))
     // if (error === false) {
     // show some feed back that the post was made
     // }
@@ -60,7 +62,7 @@ const CreatePost = () => {
           <input className="createpost-input" type="text" name="title" value={form.title || ''} onChange={handleChange} placeholder='Title' />
         </div>
         <div className="createpost-form-group">
-          <textarea type="text" maxLength={900} className="createpost-textarea" name="description" value={form.description || ''} onChange={handleChange} placeholder='Description' />
+          <textarea type="text" maxLength={900} className="createpost-textarea" name="description" value={form.description || ''} onChange={handleChange} placeholder='Description' spellCheck='false' />
         </div>
         <div className="createpost-form-group">
           <div className="createpost-input">

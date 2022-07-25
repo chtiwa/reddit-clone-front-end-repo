@@ -43,11 +43,10 @@ const reducer = (state = initialState, action) => {
     //   error: false
     // }
     case AUTH:
-      localStorage.setItem('image', action.payload.image)
       return {
         ...state,
         name: action.payload.name,
-        // userImage: action.payload.image,
+        userImage: action.payload.image,
         isLoggedIn: true,
         loading: false,
         error: false
@@ -63,7 +62,7 @@ const reducer = (state = initialState, action) => {
       ...state,
       name: action.payload.name,
       isLoggedIn: action.payload.isLoggedIn,
-      // userImage: action.payload.image,
+      userImage: action.payload.image,
       loading: false,
       error: false
     }

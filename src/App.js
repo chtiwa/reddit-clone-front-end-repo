@@ -15,9 +15,9 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Authentication />} />
-        {/* there should be an param (id) */}
         <Route path="/posts/singlepost" element={<SinglePost />} />
         <Route path="/posts/create" element={<CreatePost />} />
+        <Route path="/post/:id" element={<SinglePost />} />
         <Route path="/r/:tag" element={<SubredditPosts />} />
         <Route path="/user" element={<CreatorPosts />} />
       </Routes>

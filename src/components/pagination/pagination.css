@@ -35,3 +35,11 @@
   padding: 0.2rem 0.4rem;
   border-radius: 2px;
 }
+
+.pagination-icon {
+  pointer-events: none;
+}
+
+.hide {
+  display: none;
+}

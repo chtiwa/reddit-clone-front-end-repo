@@ -21,7 +21,7 @@ const Authentication = () => {
     if (isLoggedIn) {
       navigate('/')
     }
-  }, [isLoggedIn])
+  }, [isLoggedIn, navigate])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -68,9 +68,9 @@ const Authentication = () => {
                 <FileBase multiple={false} onDone={({ base64 }) => steFormData({ ...formData, image: base64 })} />
               </div>
             )}
-            {isLogin && (
+            {/* {isLogin && (
               <span className="forgot-psw">Forgot password ?</span>
-            )}
+            )} */}
             <button type='submit'>Submit</button>
           </form>
         </div>

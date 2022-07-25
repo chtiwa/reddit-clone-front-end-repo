@@ -9,7 +9,43 @@
   flex: 6;
 }
 
-.tags {
-  flex: 1;
+.tags-container {
+  flex: 2;
   margin-top: 5rem;
+}
+
+.tags {
+  position: fixed;
+  background-color: #fefefe;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+  padding: 1rem;
+  width: 20vw;
+  border-radius: 5px;
+}
+
+.tags:hover {
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+
+}
+
+.tags-title {
+  text-align: center;
+  font-size: 18px;
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+}
+
+.tag-link {
+  padding: 0.4rem 0.2rem;
+  width: 100%;
+  border-radius: 5px;
+  background-color: #fefefe;
+  transition: background-color 0.3s ease-out;
+}
+
+.tag-link:hover {
+  background-color: #eee;
 }

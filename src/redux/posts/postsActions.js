@@ -1,7 +1,8 @@
 import {
-  FETCH_JSON,
   SET_LOADING,
   SET_ERROR,
+  SET_COMMENTS,
+  SET_LIKES,
   GET_POSTS,
   GET_POSTS_BY_SEARCH,
   GET_POSTS_BY_CREATOR,
@@ -11,7 +12,8 @@ import {
   DELETE_POST,
   UPDATE_POST,
   LIKE_POST,
-  COMMENT_POST
+  COMMENT_POST,
+  GET_TAGS
 } from './postsTypes'
 
 import '../../axios'
@@ -19,16 +21,6 @@ import axios from 'axios'
 
 const url = 'http://localhost:5000/posts'
 
-
-export const fetchJson = () => async (dispatch) => {
-  dispatch({ type: SET_LOADING })
-  try {
-    const { data } = await axios.get('https://jsonplaceholder.typicode.com/posts')
-    dispatch({ type: FETCH_JSON, payload: data })
-  } catch (error) {
-    dispatch({ type: SET_ERROR, payload: error })
-  }
-}
 export const getPosts = (page) => async (dispatch) => {
   dispatch({ type: SET_LOADING })
   try {
@@ -47,7 +39,7 @@ export const createPost = (form, navigate) => async (dispatch) => {
     // the data is the post
     console.log(data)
     dispatch({ type: CREATE_POST, payload: data })
-    // navigate(`/posts/${data._id}`)
+    navigate(`/post/${data._id}`)
   } catch (error) {
     dispatch({ type: SET_ERROR, payload: error.message })
   }
@@ -65,12 +57,12 @@ export const getPostsBySearch = (search) => async (dispatch) => {
   }
 }
 
-export const getPostsByCreator = (page) => async (dispatch) => {
+export const getPostsByCreator = (page, creator) => async (dispatch) => {
   dispatch({ type: SET_LOADING })
   try {
-    const { data: { posts, pages } } = await axios.get(`${url}/user/myposts?page=${page}`)
+    const { data: { posts, pages, sameUser } } = await axios.get(`${url}/user/myposts?page=${page}&creator=${creator}`)
     // console.log(data)
-    dispatch({ type: GET_POSTS_BY_CREATOR, payload: { posts, pages } })
+    dispatch({ type: GET_POSTS_BY_CREATOR, payload: { posts, pages, sameUser } })
   } catch (error) {
     dispatch({ type: SET_ERROR, payload: error.message })
   }
@@ -87,26 +79,25 @@ export const getPostsBySubreddit = (page, tag) => async (dispatch) => {
   }
 }
 
-export const likePost = async (id) => async (dispatch) => {
-  dispatch({ type: SET_LOADING })
+export const likePost = (id) => async (dispatch) => {
+  // dispatch({ type: SET_LOADING })
   try {
     // the id of post
-    const { data } = await axios.patch(`${url}/likepost/${id}`)
+    const { data: { likedPost, likes, hasLikedPost } } = await axios.patch(`${url}/likepost/${id}`)
     // console.log(data)
     // the payload is the post
-    dispatch({ type: LIKE_POST, payload: data })
+    dispatch({ type: LIKE_POST, payload: { likedPost, hasLikedPost, likes } })
   } catch (error) {
     dispatch({ type: SET_ERROR, payload: error.message })
   }
 }
 
 export const commentPost = (comment, id) => async (dispatch) => {
-  dispatch({ type: SET_LOADING })
+  // dispatch({ type: SET_LOADING })
   try {
     // the id 
-    const { data } = await axios.patch(`${url}/commentpost/${id}`, { comment })
-    console.log(data)
-    dispatch({ type: COMMENT_POST, payload: data })
+    const { data: { post, comments } } = await axios.patch(`${url}/commentpost/${id}`, { comment })
+    dispatch({ type: COMMENT_POST, payload: { post, comments } })
   } catch (error) {
     dispatch({ type: SET_ERROR, payload: error.message })
   }
@@ -139,8 +130,19 @@ export const getSinglePost = (id) => async (dispatch) => {
   try {
     const { data } = await axios.get(`${url}/${id}`)
     console.log(data)
+    dispatch({ type: SET_COMMENTS, payload: data.comments })
+    dispatch({ type: SET_LIKES, payload: data.likes })
     dispatch({ type: GET_SINGLE_POST, payload: data })
   } catch (error) {
     dispatch({ type: SET_ERROR, payload: error.message })
+  }
+}
+
+export const getTags = () => async (dispatch) => {
+  try {
+    const { data } = await axios.get(`${url}/tags`)
+    dispatch({ type: GET_TAGS, payload: data })
+  } catch (error) {
+    dispatch({ type: SET_ERROR, payload: error })
   }
 }

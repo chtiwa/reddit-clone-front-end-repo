@@ -21,6 +21,7 @@
 
 
 .navbar-search {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,6 +48,77 @@
   color: #333;
   font-size: 20px;
 }
+
+.navbar-search-content {
+  position: absolute;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  top: 37px;
+  left: 0;
+  border-radius: 5px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  background: #fefefe;
+  width: 400px;
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: flex;
+}
+
+.navbar-search-link {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar-search-content-post {
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex-direction: column;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.navbar-search-content-post:hover {
+  background-color: #eee;
+}
+
+.navbar-search-content-post-inner {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-search-content-post-title {
+  font-weight: bold;
+}
+
+.navbar-search-content-post-image {
+  width: 70px;
+  height: 70px;
+  margin-right: 0.5rem;
+}
+
+.navbar-search-content-post-image img {
+  height: 100%;
+  width: 100%;
+}
+
+.navbar-search-content-tags {
+  padding: 0.5rem;
+}
+
 
 .avatar {
   display: flex;
@@ -82,13 +154,13 @@
   justify-content: space-around;
   align-items: center;
   position: absolute;
-  top: 48px;
+  top: 50px;
   right: 10px;
   z-index: 1;
   background-color: rgb(255, 255, 255);
   background-color: rgba(0, 0, 0, 0.1);
   width: 110px;
-  height: 60px;
+  height: 40px;
   border-radius: 10px;
 }
 

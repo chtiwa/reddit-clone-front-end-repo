@@ -1,33 +1,46 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
+import './subredditPosts.css'
 import Post from '../posts/post/Post'
 import Pagination from '../../components/pagination/Pagination'
-import { useParams, useLocation } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { getPostsBySubreddit } from '../../redux/posts/postsActions'
 
 const SubredditPosts = () => {
-  // const [page, setPage] = useState()
+  const location = useLocation()
   const { tag } = useParams()
+  const [page, setPage] = useState()
   console.log(tag)
   const dispatch = useDispatch()
-  const { posts } = useSelector(state => state.posts)
-  let page = 1
+  const { posts, loading } = useSelector(state => state.posts)
+  // let page = 1
   useEffect(() => {
     dispatch(getPostsBySubreddit(page, tag))
-  }, [dispatch, tag])
+  }, [dispatch, tag, page])
 
+  let tagRender
+  if (location.state?.tag) {
+    tagRender = location.state.tag
+  } else if (!loading && posts.length) {
+    tagRender = tag
+  }
   return (
     <div className='subreddit-posts-container'>
       <div className='subreddit-posts-span-container'>
-        <span>/r/{posts.length && tag}</span>
+        <span>/r/{tagRender}
+        </span>
+
       </div>
       <div className="posts-container">
-        <Post />
-        <Post />
-        <Post />
+        {posts.map((post) => {
+          return (
+            <Post {...post} key={post._id} />
+          )
+        })}
       </div>
       <div className="pagination-container">
-        {/* <Pagination page={page} setPage={setPage} /> */}
+        <Pagination page={page} setPage={setPage} />
       </div>
     </div>
   )

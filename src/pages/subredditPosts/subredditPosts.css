@@ -1,0 +1,17 @@
+.subreddit-posts-container {
+  text-align: center;
+  margin: 0.5rem 25vw;
+}
+
+.subreddit-posts-span-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+}
+
+.subreddit-posts-span-container {
+  font-weight: bold;
+  font-size: 18px;
+  box-shadow: 0 2px rgba(0, 0, 0, 0.5);
+}

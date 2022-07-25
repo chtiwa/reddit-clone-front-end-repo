@@ -1,7 +1,8 @@
 import {
-  FETCH_JSON,
   SET_LOADING,
   SET_ERROR,
+  SET_COMMENTS,
+  SET_LIKES,
   GET_POSTS,
   GET_POSTS_BY_SEARCH,
   GET_POSTS_BY_CREATOR,
@@ -11,13 +12,19 @@ import {
   DELETE_POST,
   UPDATE_POST,
   LIKE_POST,
-  COMMENT_POST
+  COMMENT_POST,
+  GET_TAGS
 } from './postsTypes'
 
 const initialState = {
   posts: [],
   searchedPosts: [],
   post: {},
+  hasLikedPost: false,
+  sameUser: false,
+  tags: [],
+  comments: [],
+  likes: [],
   pages: null,
   error: false,
   loading: false
@@ -25,15 +32,19 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_JSON: return {
-      ...state,
-      json: action.payload,
-      error: false,
-      loading: false
-    }
     case SET_LOADING: return {
       ...state,
+      sameUser: false,
       loading: true
+    }
+    // so that the comments and likes are uploaded differently than the post
+    case SET_COMMENTS: return {
+      ...state,
+      comments: action.payload
+    }
+    case SET_LIKES: return {
+      ...state,
+      likes: action.payload
     }
     case SET_ERROR: return {
       ...state,
@@ -49,7 +60,6 @@ const reducer = (state = initialState, action) => {
     case GET_POSTS_BY_SEARCH: return {
       ...state,
       searchedPosts: action.payload,
-      post: null,
       loading: false,
       error: false
     }
@@ -64,6 +74,7 @@ const reducer = (state = initialState, action) => {
       ...state,
       posts: action.payload.posts,
       pages: action.payload.pages,
+      sameUser: action.payload.sameUser,
       loading: false,
       error: false
     }
@@ -75,12 +86,14 @@ const reducer = (state = initialState, action) => {
     }
     case LIKE_POST: return {
       ...state,
-      posts: state.posts.map((post) => (post._id === action.payload._id) ? action.payload : post)
-      // we can group LIKE_POST and COMMENT_POST together
+      posts: state.posts.map((post) => (post._id === action.payload.likedPost._id) ? action.payload.likedPost : post),
+      likes: action.payload.likes,
+      hasLikedPost: action.payload.hasLikedPost
     }
     case COMMENT_POST: return {
       ...state,
-      posts: state.posts.map((post) => (post._id === action.payload._id) ? action.payload : post)
+      posts: state.posts.map((post) => (post._id === action.payload._id) ? action.payload : post),
+      comments: action.payload.comments
     }
     case CREATE_POST: return {
       ...state,
@@ -97,6 +110,12 @@ const reducer = (state = initialState, action) => {
     case DELETE_POST: return {
       ...state,
       posts: state.posts.filter((post) => post._id !== action.payload),
+      loading: false,
+      error: false
+    }
+    case GET_TAGS: return {
+      ...state,
+      tags: action.payload,
       loading: false,
       error: false
     }
