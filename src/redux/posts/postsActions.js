@@ -3,11 +3,6 @@ import {
   SET_ERROR,
   SET_TAGS_LOADING,
   SET_SEARCH_LOADING,
-  SET_LAST_POST_SCROLL_Y,
-  SECONDARY_LOADING,
-  ADD_PAGE,
-  // SET_COMMENTS,
-  // SET_LIKES,
   GET_POSTS,
   GET_POSTS_BY_SEARCH,
   GET_POSTS_BY_CREATOR,
@@ -19,7 +14,8 @@ import {
   LIKE_POST,
   UNLIKE_POST,
   COMMENT_POST,
-  GET_TAGS
+  GET_TAGS,
+  SET_PAGE
 } from './postsTypes'
 
 import '../../axios'
@@ -27,22 +23,14 @@ import axios from 'axios'
 
 const url = 'http://localhost:5000/posts'
 
-export const setLastPostScrollY = (lastPostScrollY) => (dispatch) => {
-  dispatch({ type: SET_LAST_POST_SCROLL_Y, payload: lastPostScrollY })
-}
-
-export const addPage = () => (dispatch) => {
-  dispatch({ type: ADD_PAGE })
+export const setPage = (page) => (dispatch) => {
+  dispatch({ type: SET_PAGE, payload: page })
 }
 
 export const getPosts = (page) => async (dispatch) => {
+  dispatch({ type: SET_LOADING })
   try {
     if (page === undefined) page = 1
-    if (page === 1) {
-      dispatch({ type: SET_LOADING })
-    } else {
-      dispatch({ type: SECONDARY_LOADING })
-    }
     const { data: { posts, pages } } = await axios.get(`${url}?page=${page}`)
     dispatch({ type: GET_POSTS, payload: { posts, pages } })
   } catch (error) {
@@ -74,7 +62,7 @@ export const createPost = (form, navigate) => async (dispatch) => {
     }
     const { data } = await axios.post(`${url}`, form, config)
     dispatch({ type: CREATE_POST, payload: data })
-    // navigate(`/post/${data._id}`)
+    navigate(`/post/${data._id}`)
   } catch (error) {
     dispatch({ type: SET_ERROR, payload: error.message })
   }

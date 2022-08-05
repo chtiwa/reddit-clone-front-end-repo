@@ -5,6 +5,22 @@
   padding: 1rem;
 }
 
+.createpost-inner {
+  position: relative;
+
+}
+
+.create-back {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.create-back-icon {
+  font-size: 34px;
+}
+
 .createpost-form {
   display: flex;
   flex-direction: column;
@@ -12,7 +28,7 @@
   padding: 1rem;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
   border: 0;
-  width: 50vw;
+  width: 60vw;
   border-radius: 5px;
 }
 
@@ -141,4 +157,62 @@ input[type=file]:focus {
 
 .createpost-btn:hover {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+}
+
+.loader-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  width: 95vw;
+  height: 80vh;
+}
+
+.loader {
+  padding: 0.5rem;
+  background-color: #ff750f;
+  margin: 0 0.2rem;
+  border-radius: 50%;
+}
+
+.loader-1 {
+  animation: fade 800ms linear infinite;
+  animation-delay: 0ms;
+}
+
+.loader-2 {
+  animation: fade 800ms linear infinite;
+  animation-delay: 100ms;
+}
+
+.loader-3 {
+  animation: fade 800ms linear infinite;
+  animation-delay: 200ms;
+}
+
+.loader-4 {
+  animation: fade 800ms linear infinite;
+  animation-delay: 300ms;
+}
+
+.loader-5 {
+  animation: fade 800ms linear infinite;
+  animation-delay: 400ms;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+
+  }
+}
+
+@media screen and (max-width:1000px) {
+  .createpost-form {
+    width: 90vw;
+  }
 }

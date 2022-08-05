@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import './creatorPosts.css'
 import { useLocation } from 'react-router-dom'
 import Pagination from '../../components/pagination/Pagination'
@@ -9,13 +9,13 @@ import PostLoading from '../posts/post/PostLoading'
 
 const CreatorPosts = () => {
   const location = useLocation()
-  const [page, setPage] = useState()
+  // const [page, setPage] = useState(1)
   const [creator, setCreator] = useState(location?.state?.creator)
   const dispatch = useDispatch()
-  const { postsByCreator, loading } = useSelector(state => state.posts)
+  const { postsByCreator, loading, page } = useSelector(state => state.posts)
 
   useEffect(() => {
-    console.log('creatorPosts')
+    // console.log('creatorPosts')
     dispatch(getPostsByCreator(page, creator))
   }, [dispatch, page, creator])
 
@@ -58,7 +58,7 @@ const CreatorPosts = () => {
         })}
       </div>
       <div className="pagination-container">
-        <Pagination page={page} setPage={setPage} setCreator={setCreator} />
+        <Pagination setCreator={setCreator} />
       </div>
     </div>
   )

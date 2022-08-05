@@ -1,21 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import './post.css'
 import { ImArrowUp, ImArrowDown } from 'react-icons/im'
 import { FaRegCommentAlt } from 'react-icons/fa'
 import { FiMoreHorizontal } from 'react-icons/fi'
 import { CgProfile } from 'react-icons/cg'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { deletePost, setLastPostScrollY } from '../../../redux/posts/postsActions'
-const Post = ({ title, file, tags, description, _id, creator, likes, comments, createdAt, creatorImage, lastPostRef, scrollPosition }) => {
+import { deletePost } from '../../../redux/posts/postsActions'
+const Post = ({ title, file, tags, description, _id, creator, likes, comments, createdAt, creatorImage }) => {
   const dispatch = useDispatch()
-  const location = useLocation()
-  useEffect(() => {
-    if (lastPostRef !== null && location.pathname === '/') {
-      dispatch(setLastPostScrollY(lastPostRef?.current?.offsetTop))
-    }
-  }, [lastPostRef?.current?.offsetTop, dispatch, lastPostRef, location.pathname])
-
   const { sameUser } = useSelector(state => state.posts)
   const [like, setLike] = useState(false)
   const [dislike, setDislike] = useState(false)
@@ -44,7 +37,7 @@ const Post = ({ title, file, tags, description, _id, creator, likes, comments, c
   }
 
   return (
-    <div className="post-container" ref={lastPostRef}>
+    <div className="post-container" >
       <div className=" post-info">
         <div className="post-info-creator">
           <div className="avatar-info-container">
@@ -66,7 +59,7 @@ const Post = ({ title, file, tags, description, _id, creator, likes, comments, c
               <FiMoreHorizontal className='sameuser-features-icon' />
               <div className="sameuser-features-content">
                 <span>
-                  <Link to={`/posts/create`} state={{ id: _id, description: description, title: title, tags: tags, file: file }} >Edit</Link>
+                  <Link to={`/posts/create`} state={{ id: _id, description: description, title: title, tags: [...tags], file: file }} >Edit</Link>
                 </span>
                 <span onClick={() => dispatch(deletePost(_id))}>Delete</span>
               </div>
@@ -74,13 +67,19 @@ const Post = ({ title, file, tags, description, _id, creator, likes, comments, c
           )}
         </div>
         <div className="post-info-title">
-          {title}
+          <Link to={`/post/${_id}`} >
+            {title}
+          </Link>
         </div>
       </div>
-      <Link to={`/post/${_id}`} state={{ scrollPosition: scrollPosition }}>
-        <div className="post-img">
-          {fileDisplay}
-        </div>
+      <Link to={`/post/${_id}`} >
+        {fileDisplay === '' ? (
+          <></>
+        ) : (
+          <div className="post-img">
+            {fileDisplay}
+          </div>
+        )}
       </Link>
       <div className="post-desc">
         {description.slice(0, 40)}...

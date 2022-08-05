@@ -2,11 +2,7 @@ import {
   SET_LOADING,
   SET_ERROR,
   SET_TAGS_LOADING,
-  SECONDARY_LOADING,
   SET_SEARCH_LOADING,
-  SET_LAST_POST_SCROLL_Y,
-  ADD_PAGE,
-  // SET_LIKES,
   GET_POSTS,
   GET_POSTS_BY_SEARCH,
   GET_POSTS_BY_CREATOR,
@@ -18,7 +14,8 @@ import {
   LIKE_POST,
   UNLIKE_POST,
   COMMENT_POST,
-  GET_TAGS
+  GET_TAGS,
+  SET_PAGE
 } from './postsTypes'
 
 const initialState = {
@@ -49,21 +46,9 @@ const reducer = (state = initialState, action) => {
       sameUser: false,
       loading: true
     }
-    case SECONDARY_LOADING: return {
-      ...state,
-      secondaryLoading: true,
-    }
     case SET_TAGS_LOADING: return {
       ...state,
       tagsLoading: true,
-    }
-    case SET_LAST_POST_SCROLL_Y: return {
-      ...state,
-      lastPostScrollY: action.payload
-    }
-    case ADD_PAGE: return {
-      ...state,
-      page: state.page + 1
     }
     case SET_SEARCH_LOADING: return {
       ...state,
@@ -75,19 +60,21 @@ const reducer = (state = initialState, action) => {
       tagsLoading: false,
       loading: false
     }
+    case SET_PAGE: return {
+      ...state,
+      page: action.payload
+    }
     case GET_POSTS: return {
       ...state,
-      posts: [...state.posts, ...action.payload.posts],
+      posts: [...action.payload.posts],
       pages: action.payload.pages,
       loading: false,
-      secondaryLoading: false,
       error: false
     }
     case GET_POSTS_BY_SEARCH: return {
       ...state,
       searchedPosts: action.payload,
       searchLoading: false,
-      secondaryLoading: false,
       error: false
     }
     case GET_POSTS_BY_SUBREDDIT: return {
@@ -95,14 +82,12 @@ const reducer = (state = initialState, action) => {
       subredditPosts: action.payload.posts,
       pages: action.payload.pages,
       loading: false,
-      secondaryLoading: false,
       error: false
     }
     case GET_POSTS_BY_CREATOR: return {
       ...state,
       postsByCreator: action.payload.posts,
       pages: action.payload.pages,
-      secondaryLoading: false,
       // add a boolean hasLikedPost based on if the user like that particular post or no
       sameUser: action.payload.sameUser,
       loading: false,
@@ -151,7 +136,8 @@ const reducer = (state = initialState, action) => {
     }
     case DELETE_POST: return {
       ...state,
-      posts: state.posts.filter((post) => post._id !== action.payload),
+      // posts: state.posts.filter((post) => post._id !== action.payload),
+      postsByCreator: state.postsByCreator.filter((post) => post._id !== action.payload),
       sameUser: true,
       loading: false,
       error: false

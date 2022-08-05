@@ -91,14 +91,16 @@
 .post-img {
   cursor: pointer;
   height: 500px;
-  width: 100%;
+  width: 80%;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 auto;
   background-color: #fefefe;
 }
 
-img {
+img,
+video {
   height: 100%;
   width: 80%;
   border-radius: 10px;

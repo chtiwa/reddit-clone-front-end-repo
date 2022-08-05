@@ -112,15 +112,18 @@
 }
 
 .navbar-search-content-post-image {
-  width: 70px;
-  height: 70px;
+  width: 100px;
+  height: 100px;
   margin-right: 0.5rem;
 }
 
-.navbar-search-content-post-image img {
+.navbar-search-content-post-image img,
+.navbar-search-content-post-image video {
   height: 100%;
   width: 100%;
 }
+
+
 
 .navbar-search-content-tags {
   padding: 0.5rem;

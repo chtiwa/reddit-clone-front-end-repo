@@ -97,8 +97,11 @@
 
 .singlepost-description {
   padding: 1rem;
-  margin: 1rem 0;
+  margin: 1rem auto;
   font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .write-comment {

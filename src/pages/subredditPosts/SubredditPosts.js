@@ -11,11 +11,9 @@ import PostLoading from '../posts/post/PostLoading'
 const SubredditPosts = () => {
   const location = useLocation()
   const { tag } = useParams()
-  const [page, setPage] = useState()
-  // console.log(tag)
+  const [page, setPage] = useState(1)
   const dispatch = useDispatch()
   const { subredditPosts, loading } = useSelector(state => state.posts)
-  // let page = 1
   useEffect(() => {
     dispatch(getPostsBySubreddit(page, tag))
   }, [dispatch, tag, page])

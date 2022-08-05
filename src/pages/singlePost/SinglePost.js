@@ -24,6 +24,7 @@ const SinglePost = () => {
 
   useEffect(() => {
     dispatch(getSinglePost(id, userId))
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [dispatch, id, userId])
 
   useEffect(() => {
@@ -90,7 +91,7 @@ const SinglePost = () => {
   return !loading && post && (
     <div className='singlepost-container'>
       <div className="singlepost">
-        <div className="back" onClick={() => navigate(-1, { state: { scrollPosition: location?.state?.scrollPosition } })}>
+        <div className="back" onClick={() => navigate(-1)}>
           <TiArrowBack className='back-icon' />
         </div>
         <div className="singlepost-info">
@@ -119,7 +120,7 @@ const SinglePost = () => {
           {fileDisplay}
         </div>
         <div className="singlepost-description">
-          <p style={{ textAlign: 'center' }} >{post.description}</p>
+          <p>{post.description}</p>
         </div>
         <div className="post-features">
           <div className="votes">

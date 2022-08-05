@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import './navbar.css'
 import { FaSearch } from 'react-icons/fa'
 import { CgProfile } from 'react-icons/cg'
-import { useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, checkLogin } from '../../redux/auth/authActions'
 import { getPostsBySearch } from '../../redux/posts/postsActions'
@@ -12,7 +11,6 @@ import Sidebar from './Sidebar'
 
 const Navbar = () => {
   const dispatch = useDispatch()
-  const location = useLocation()
   const { isLoggedIn, userImage, name } = useSelector(state => state.auth)
   const { searchedPosts, searchLoading } = useSelector(state => state.posts)
   const [search, setSearch] = useState('')
@@ -27,7 +25,7 @@ const Navbar = () => {
     dispatch(logout())
   }
 
-  const handleKeyDown = (e) => {
+  const handleKeyUp = (e) => {
     setSearch(e.target.value)
     // console.log(search)
     if (search) {
@@ -73,7 +71,7 @@ const Navbar = () => {
                       <img src={file?.url} alt="img" className="singlepost-img" />
                     )}
                     {(file?.format === "mp4" || file?.format === "mov" || file?.format === "wmv" || file?.format === "avi" || file?.format === "webm") && (
-                      <video controls autoPlay muted playsInline className="singlepost-img">
+                      <video muted className="singlepost-img">
                         <source src={file?.url} type={`video/${file?.format}`} />
                       </video>
                     )}
@@ -105,9 +103,9 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="navbar-search">
-        <input type="text" name="" id="" placeholder='Search...' value={search || ""} onChange={(e) => setSearch(e.target.value)} onKeyDown={handleKeyDown} onClick={handleShowModal} />
+        <input type="text" name="" id="" placeholder='Search...' value={search || ""} onChange={(e) => setSearch(e.target.value)} onKeyUp={handleKeyUp} onClick={handleShowModal} />
         {/* create a modal for the search */}
-        <FaSearch className='navbar-search-icon' onClick={handleKeyDown} />
+        <FaSearch className='navbar-search-icon' onClick={handleKeyUp} />
         <div className={`navbar-search-content ${modal ? 'show' : 'hide'}`}>
           {SearchedPosts}
         </div>

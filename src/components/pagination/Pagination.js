@@ -2,52 +2,45 @@ import React, { useEffect } from 'react'
 import './pagination.css'
 import { useNavigate, useLocation, useParams } from 'react-router-dom'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { setPage } from '../../redux/posts/postsActions'
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search)
-}
+// function useQuery() {
+//   return new URLSearchParams(useLocation().search)
+// }
 
-const Pagination = ({ page, setPage, setCreator }) => {
-  const query = useQuery()
+const Pagination = ({ setCreator }) => {
+  // const query = useQuery()
   const location = useLocation()
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const { tag } = useParams()
-  // const [page, setPage] = useState()
-  const { pages, posts, loading
+  const { pages, loading, page
   } = useSelector(state => state.posts)
-
   useEffect(() => {
-    // check if the route is in the first page
-    setPage(Number(query.get('page')) || 1)
-    if (page === undefined) { setPage(1) }
-    // console.log(page)
-  }, [query, page, setPage])
+    console.log(location.search)
+    if (location.search === '') {
+      dispatch(setPage(1))
+    }
+  }, [dispatch, location.search])
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [page])
-  // let pages = 20
+  }, [])
+
   let array = []
   for (let i = 0; i < pages; i++) {
     array.push(i + 1)
-    // the array represents the pages
   }
 
   const handleChangePage = (newPage) => {
-    // scroll to the top of the page
-    setPage(newPage)
-    // console.log(newPage)
-    // the navigation will be based on the location
-    // console.log(location)
+    dispatch(setPage(newPage))
     if (location.pathname === '/user') {
-      // console.log(location.state?.creator)
+      console.log(location.search)
       setCreator(location?.state?.creator)
       navigate(`/user?page=${newPage}`, { state: { creator: location.state?.creator } })
     } else if (location.pathname === `/r/${tag}`) {
       navigate(`/r/${tag}?page=${newPage}`)
-      // console.log(tag)
     } else if (location.pathname === '/') {
       navigate(`/?page=${newPage}`)
     }
@@ -59,7 +52,6 @@ const Pagination = ({ page, setPage, setCreator }) => {
     middlePagination = (
       <div className='pagination-inner'>
         {array.map((arrayPage) => {
-          // console.log(arrayPage, page)
           return (
             <button key={arrayPage} onClick={() => handleChangePage(arrayPage)} className={`${arrayPage === Number(page) ? 'active' : ''}`} >
               {arrayPage}
@@ -70,7 +62,6 @@ const Pagination = ({ page, setPage, setCreator }) => {
     )
   } else {
     const startingPage = Math.floor((Number(page) - 1) / 5) * 5
-    // console.log(startingPage)
     middlePagination = (
       <div className="pagination-inner">
         {array.slice(startingPage, startingPage + 5 === pages ? startingPage + 4 : startingPage + 5).map((arrayPage) => {
