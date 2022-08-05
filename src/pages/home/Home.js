@@ -7,7 +7,8 @@ import { getTags } from '../../redux/posts/postsActions'
 
 const Home = () => {
   const dispatch = useDispatch()
-  const { tags } = useSelector(state => state.posts)
+  const { tags, tagsLoading } = useSelector(state => state.posts)
+
   useEffect(() => {
     dispatch(getTags())
   }, [dispatch])
@@ -24,7 +25,7 @@ const Home = () => {
           <div className="tags-title">
             Top subreddits :
           </div>
-          {tags.length && tags.map((tag, index) => {
+          {!tagsLoading && tags.length > 0 && tags.map((tag, index) => {
             return (
               <div className="tag" key={index}>
                 <Link to={`/r/${tag}`} className='tag-link' state={{ tag: tag }} >
@@ -33,6 +34,18 @@ const Home = () => {
               </div>
             )
           })}
+          {tagsLoading && (
+            <ul className="skeleton-home-list">
+              <li className="skeleton"></li>
+              <li className="skeleton"></li>
+              <li className="skeleton"></li>
+              <li className="skeleton"></li>
+              <li className="skeleton"></li>
+              <li className="skeleton"></li>
+              <li className="skeleton"></li>
+              <li className="skeleton"></li>
+            </ul>
+          )}
         </div>
       </div>
     </div>

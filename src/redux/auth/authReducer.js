@@ -4,13 +4,18 @@ import {
   AUTH,
   // LOGIN,
   // SIGNUP,
+  FORGOT_PASSWORD,
+  RESET_PASSWORD,
   LOGOUT,
   CHECK_LOGIN
 } from './authTypes'
 
 const initialState = {
   name: null,
-  // userImage: null,
+  userImage: null,
+  userId: null,
+  success: false,
+  message: '',
   isLoggedIn: false,
   loading: false,
   error: false
@@ -20,33 +25,24 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_LOADING: return {
       ...state,
-      loading: true
+      loading: true,
+      success: false,
+      error: false
     }
-    case SET_ERROR: return {
-      ...state,
-      error: action.payload
-    }
-    // case LOGIN: return {
-    //   ...state,
-    //   name: action.payload.name,
-    //   userImage: action.payload.image,
-    //   isLoggedIn: true,
-    //   loading: false,
-    //   error: false
-    // }
-    // case SIGNUP: return {
-    //   ...state,
-    //   name: action.payload.name,
-    //   userImage: action.payload.image,
-    //   isLoggedIn: true,
-    //   loading: false,
-    //   error: false
-    // }
+    case SET_ERROR:
+      // console.log(action.payload.error.response.data)
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+        success: false
+      }
     case AUTH:
       return {
         ...state,
         name: action.payload.name,
         userImage: action.payload.image,
+        userId: action.payload.userId,
         isLoggedIn: true,
         loading: false,
         error: false
@@ -63,6 +59,22 @@ const reducer = (state = initialState, action) => {
       name: action.payload.name,
       isLoggedIn: action.payload.isLoggedIn,
       userImage: action.payload.image,
+      userId: action.payload.userId,
+      loading: false,
+      error: false
+    }
+    case FORGOT_PASSWORD:
+      return {
+        ...state,
+        success: action.payload.success,
+        message: action.payload.message,
+        loading: false,
+        error: false
+      }
+    case RESET_PASSWORD: return {
+      ...state,
+      success: action.payload.success,
+      message: action.payload.message,
       loading: false,
       error: false
     }

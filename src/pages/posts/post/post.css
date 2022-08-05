@@ -5,7 +5,7 @@
   height: max-content;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
-  margin-bottom: 1rem;
+  margin: 0.5rem 0;
 }
 
 .post-container:hover {
@@ -55,13 +55,14 @@
 .sameuser-features:hover .sameuser-features-content {
   display: flex;
   flex-direction: column;
+  z-index: 2;
 }
 
 .sameuser-features-content {
   display: none;
   position: absolute;
-  top: 20px;
-  left: -35px;
+  top: 0px;
+  right: 30px;
   align-items: center;
   justify-content: center;
   padding: 0.5rem;
@@ -112,6 +113,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
 .votes,
@@ -119,7 +121,16 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem 3rem;
+  padding: 1rem 2rem;
+}
+
+@media screen and (max-width:800px) {
+
+  .votes,
+  .comments {
+    padding: 1rem 0.75rem;
+  }
+
 }
 
 .vote-icon,
@@ -139,4 +150,96 @@ img {
 
 .comments {
   cursor: pointer;
+}
+
+/* loading */
+.post-loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.loading-post-container {
+  margin: 2rem 0;
+}
+
+.loading-post-info {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+
+.loading-post-creator-created {
+  width: 60%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin: 0 0.2rem;
+}
+
+.loading-post-avatar {
+  padding: 1rem;
+  border-radius: 50%;
+}
+
+.loading-post-info-title {
+  margin: 0 auto;
+  text-align: center;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  width: 30%;
+  border-radius: 5px;
+}
+
+.loading-post-img-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 5px;
+  height: 500px;
+  width: 100%;
+}
+
+.loading-post-img {
+  padding: 1rem;
+  height: 100%;
+  width: 100%;
+}
+
+.loading-post-desc-container {
+  display: grid;
+  place-items: center;
+}
+
+.loading-post-desc {
+  padding: 4rem 1.25rem;
+  width: 80%;
+  border-radius: 5px;
+  margin: 0.5rem;
+}
+
+.loading-post-features {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-post-features .votes,
+.loading-post-features .comments {
+  width: 20%;
+  padding: 1rem 1.5rem;
+  border-radius: 5px;
+  margin: 0.5rem;
+}
+
+/* single post css */
+.loading-singlepost-container {
+  width: 70vw;
+}
+
+@media screen and (max-width:764px) {
+  .post-container {
+    width: 80vw;
+  }
 }

@@ -17,3 +17,48 @@
   align-items: center;
   justify-content: center;
 }
+
+.loader-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem;
+}
+
+.loader {
+  padding: 0.5rem;
+  background-color: #ff750f;
+  margin: 0 0.2rem;
+  border-radius: 50%;
+}
+
+.loader-1 {
+  animation: fade 1.5s linear infinite;
+}
+
+.loader-2 {
+  animation: fade 1.6s linear infinite;
+}
+
+.loader-3 {
+  animation: fade 1.7s linear infinite;
+}
+
+.loader-4 {
+  animation: fade 1.8s linear infinite;
+}
+
+.loader-5 {
+  animation: fade 1.9s linear infinite;
+}
+
+@keyframes fade {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+
+  }
+}

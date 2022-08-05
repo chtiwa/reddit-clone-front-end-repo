@@ -30,3 +30,17 @@ input[type=file] {
   font-family: 'Roboto', sans-serif;
   font-style: none;
 }
+
+.skeleton {
+  animation: skeleton-loading 1s ease-in-out infinite alternate;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsl(200, 20%, 80%);
+  }
+
+  100% {
+    background-color: hsl(200, 20%, 95%);
+  }
+}

@@ -1,5 +1,7 @@
 export const SET_LOADING = 'SET_LOADING'
 export const SET_ERROR = 'SET_ERROR'
 export const AUTH = 'AUTH'
+export const FORGOT_PASSWORD = 'FORGOT_PASSWORD'
+export const RESET_PASSWORD = 'RESET_PASSWORD'
 export const LOGOUT = 'LOGOUT'
 export const CHECK_LOGIN = 'CHECK_LOGIN'

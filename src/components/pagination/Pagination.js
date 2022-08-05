@@ -8,7 +8,7 @@ function useQuery() {
   return new URLSearchParams(useLocation().search)
 }
 
-const Pagination = ({ page, setPage }) => {
+const Pagination = ({ page, setPage, setCreator }) => {
   const query = useQuery()
   const location = useLocation()
   // const dispatch = useDispatch()
@@ -22,12 +22,10 @@ const Pagination = ({ page, setPage }) => {
     // check if the route is in the first page
     setPage(Number(query.get('page')) || 1)
     if (page === undefined) { setPage(1) }
-    console.log(page)
+    // console.log(page)
   }, [query, page, setPage])
 
   useEffect(() => {
-    // console.log('page', page)
-    // dispatch(getPosts(page))
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [page])
   // let pages = 20
@@ -40,14 +38,16 @@ const Pagination = ({ page, setPage }) => {
   const handleChangePage = (newPage) => {
     // scroll to the top of the page
     setPage(newPage)
-    console.log(newPage)
+    // console.log(newPage)
     // the navigation will be based on the location
-    console.log(location)
+    // console.log(location)
     if (location.pathname === '/user') {
-      navigate(`/user?page=${newPage}`)
+      // console.log(location.state?.creator)
+      setCreator(location?.state?.creator)
+      navigate(`/user?page=${newPage}`, { state: { creator: location.state?.creator } })
     } else if (location.pathname === `/r/${tag}`) {
       navigate(`/r/${tag}?page=${newPage}`)
-      console.log(tag)
+      // console.log(tag)
     } else if (location.pathname === '/') {
       navigate(`/?page=${newPage}`)
     }
@@ -82,16 +82,11 @@ const Pagination = ({ page, setPage }) => {
         })}
         {startingPage + 5 === pages ? (<></>) : (<button>...</button>)}
         <button onClick={() => handleChangePage(pages)} className={`${pages === Number(page) ? 'active' : ''}`}>{pages}</button>
-
       </div>
     )
   }
 
-  if (posts.length === 0 && !loading) {
-    return <h2 style={{ textAlign: 'center' }} >No posts</h2>
-  }
-
-  return pages > 1 && (
+  return pages > 1 && !loading && (
     <div className="pagination">
       <button onClick={() => handleChangePage(page - 1)} disabled={page === 1} className={`icon-btn ${page === 1 && 'hide'}`} >
         <FaChevronLeft className={`pagination-icon ${page === 1 && 'hide'}`} />

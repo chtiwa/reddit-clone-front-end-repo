@@ -1,20 +1,22 @@
-export const SET_SHOW = 'SET_SHOW'
-export const SET_HIDE = 'SET_HIDE'
+import {
+  CLOSE_MODAL,
+  OPEN_MODAL,
+  SET_MODAL_MESSAGE
+} from './modalTypes'
+
 const initialState = {
-  show: false
+  show: false,
+  message: ''
 }
-
-export const setShow = () => (dispatch) => {
-  dispatch({ type: SET_SHOW })
-}
-export const setHide = () => (dispatch) => {
-  dispatch({ type: SET_HIDE })
-}
-
+// Snackbar
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_SHOW: return { show: true }
-    case SET_HIDE: return { show: false }
+    case CLOSE_MODAL: return { ...state, show: false }
+    case OPEN_MODAL: return { ...state, show: true }
+    case SET_MODAL_MESSAGE: return {
+      ...state,
+      message: action.payload
+    }
     default: return state
   }
 }

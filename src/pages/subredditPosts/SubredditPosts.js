@@ -6,14 +6,15 @@ import Post from '../posts/post/Post'
 import Pagination from '../../components/pagination/Pagination'
 import { useParams } from 'react-router-dom'
 import { getPostsBySubreddit } from '../../redux/posts/postsActions'
+import PostLoading from '../posts/post/PostLoading'
 
 const SubredditPosts = () => {
   const location = useLocation()
   const { tag } = useParams()
   const [page, setPage] = useState()
-  console.log(tag)
+  // console.log(tag)
   const dispatch = useDispatch()
-  const { posts, loading } = useSelector(state => state.posts)
+  const { subredditPosts, loading } = useSelector(state => state.posts)
   // let page = 1
   useEffect(() => {
     dispatch(getPostsBySubreddit(page, tag))
@@ -22,9 +23,22 @@ const SubredditPosts = () => {
   let tagRender
   if (location.state?.tag) {
     tagRender = location.state.tag
-  } else if (!loading && posts.length) {
+  } else if (!loading && subredditPosts.length) {
     tagRender = tag
   }
+
+  if (loading) {
+    return (
+      <div className="post-loading-container">
+        <PostLoading />
+        <PostLoading />
+        <PostLoading />
+        <PostLoading />
+        <PostLoading />
+      </div>
+    )
+  }
+
   return (
     <div className='subreddit-posts-container'>
       <div className='subreddit-posts-span-container'>
@@ -33,7 +47,7 @@ const SubredditPosts = () => {
 
       </div>
       <div className="posts-container">
-        {posts.map((post) => {
+        {subredditPosts.map((post) => {
           return (
             <Post {...post} key={post._id} />
           )

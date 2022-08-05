@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   margin-top: 2rem;
+  position: relative;
 }
 
 .auth-container {
@@ -11,7 +12,8 @@
   background-color: #fefefe;
   width: 50vw;
   height: max-content;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
   border: 0;
   outline: 0;
 }
@@ -24,6 +26,10 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+}
+
+.type h2 {
+  padding: 0.3rem 0.2rem;
 }
 
 .type .login,
@@ -137,3 +143,40 @@ input:focus {
   /* background-color: #fefefe; */
   /* color: #232323; */
 }
+
+/* snackbar */
+.snackbar {
+  position: absolute;
+  padding: 1rem;
+  background-color: #333;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  color: #fefefe;
+  border-radius: 10px;
+  /* transition: transform 0.5s ease-in-out; */
+}
+
+.show-snackbar {
+  display: block;
+  /* transform: translateY(0vh); */
+  animation: 0.3s ease-in slide-down;
+}
+
+.hide-snackbar {
+  display: none;
+  /* transform: translateY(-50vh); */
+}
+
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20vh);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* @media screen and (max-width) */

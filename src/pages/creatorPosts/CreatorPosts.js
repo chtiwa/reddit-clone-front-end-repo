@@ -1,58 +1,64 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import './creatorPosts.css'
 import { useLocation } from 'react-router-dom'
 import Pagination from '../../components/pagination/Pagination'
 import { useDispatch, useSelector } from 'react-redux'
 import Post from '../posts/post/Post'
 import { getPostsByCreator } from '../../redux/posts/postsActions'
+import PostLoading from '../posts/post/PostLoading'
 
 const CreatorPosts = () => {
-  // you need to pass the page and setPage
-  // the pages will be fetched in the pagination
   const location = useLocation()
   const [page, setPage] = useState()
+  const [creator, setCreator] = useState(location?.state?.creator)
   const dispatch = useDispatch()
-  const { posts, loading } = useSelector(state => state.posts)
-  // 
-  // let page = 1
-  // 
-  let name
-  if (posts?.length) {
-    name = posts[0].creator
-  }
+  const { postsByCreator, loading } = useSelector(state => state.posts)
+
   useEffect(() => {
-    console.log(location.state?.creator)
-    if (location.state) {
-      dispatch(getPostsByCreator(page, location.state?.creator))
-    } else {
-      dispatch(getPostsByCreator(page))
-    }
-  }, [dispatch, page, name, location.state])
+    console.log('creatorPosts')
+    dispatch(getPostsByCreator(page, creator))
+  }, [dispatch, page, creator])
+
+  if (loading) {
+    return (
+      <div className="post-loading-container">
+        <PostLoading />
+        <PostLoading />
+        <PostLoading />
+        <PostLoading />
+        <PostLoading />
+      </div>
+    )
+  }
+
+  if (!loading && postsByCreator.length === 0) {
+    return <h2 style={{ textAlign: 'center', paddingTop: '3rem' }} >No posts made yet!</h2>
+  }
 
   return (
     <div className='creator-posts-container'>
       <div className="posts-creator-container">
-        {posts?.length > 0 && !loading && (
+        {postsByCreator?.length > 0 && !loading && (
           <div className="posts-creator">
             <>
-              Posts created by:
+              Posts created by :
               <br />
               <span>
-                {name}
+                {location.state?.creator}
               </span>
             </>
           </div>
         )}
       </div>
       <div className="posts-container">
-        {posts.map((post) => {
+        {postsByCreator.map((post) => {
           return (
             <Post {...post} key={post._id} />
           )
         })}
       </div>
       <div className="pagination-container">
-        <Pagination page={page} setPage={setPage} />
+        <Pagination page={page} setPage={setPage} setCreator={setCreator} />
       </div>
     </div>
   )

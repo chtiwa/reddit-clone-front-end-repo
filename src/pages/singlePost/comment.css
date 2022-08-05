@@ -6,10 +6,10 @@
 }
 
 .comment-creator {
-  /* height: 40px; */
-  /* width: 40px; */
-  background-color: #333;
-  /* padding: 1.2rem; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: inherit;
   margin: 0.5rem 0.5rem;
   border-radius: 50%;
 }

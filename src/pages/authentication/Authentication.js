@@ -1,21 +1,34 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import './auth.css'
-import FileBase from 'react-file-base64'
-import { AiFillLock } from 'react-icons/ai'
-import { AiFillUnlock } from 'react-icons/ai'
+import { AiFillLock, AiFillUnlock } from 'react-icons/ai'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { login, signup } from '../../redux/auth/authActions'
+import { login, signup, forgotPassword } from '../../redux/auth/authActions'
+import { openModal, setModalMessage } from '../../redux/modal/modalActions'
+import SnackBar from '../snackbar/SnackBar'
+
 
 const Authentication = () => {
-  // at first it's signup
   const dispatch = useDispatch()
-  const { isLoggedIn, error } = useSelector(state => state.auth)
+  const { isLoggedIn, error, success, loading, message } = useSelector(state => state.auth)
   const navigate = useNavigate()
-  const [isLogin, setIsLogin] = useState(false)
+  const [isLogin, setIsLogin] = useState(true)
   const [showPsw, setShowPsw] = useState(false)
-  const [formData, steFormData] = useState({ name: '', email: '', password: '', image: '' })
+  const [form, setForm] = useState({ name: '', email: '', password: '' })
+  const [fileData, setFileData] = useState('')
+  const [file, setFile] = useState('')
 
+  useMemo(() => {
+    // back end error-handling
+    if (!loading && success && !error) {
+      dispatch(setModalMessage(message))
+      dispatch(openModal())
+    }
+    if (!loading && !success && error) {
+      dispatch(setModalMessage(error))
+      dispatch(openModal())
+    }
+  }, [loading, success, error, message, dispatch])
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -25,37 +38,59 @@ const Authentication = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    const formdata = new FormData()
+    formdata.append('name', form.name)
+    formdata.append('email', form.email)
+    formdata.append('file', fileData)
+    formdata.append('password', form.password)
     if (isLogin) {
-      dispatch(login(formData))
+      dispatch(login(form))
     } else {
-      dispatch(signup(formData))
+      dispatch(signup(formdata))
     }
   }
 
   const handleChange = (e) => {
     let { name, value } = e.target
-    steFormData({ ...formData, [name]: value })
+    setForm({ ...form, [name]: value })
+  }
+
+  const handleFileChange = ({ target }) => {
+    setFileData(target.files[0])
+    setFile(target.value)
+  }
+
+  const handleForgotPassword = () => {
+    if (form.email === '' || form.email.length < 8) {
+      console.log('No email')
+      // front end error message
+      dispatch(setModalMessage('Please enter an email'))
+      dispatch(openModal())
+    } else {
+      dispatch(forgotPassword(form.email))
+    }
   }
 
   return (
     <div className='auth'>
+      <SnackBar />
       <div className="auth-container">
         <div className="type">
           <span className={`login ${isLogin ? 'bg-orange-red' : 'bg-whitish'}`} onClick={() => setIsLogin(true)} >Login</span>
           <span className={`signup ${!isLogin ? 'bg-orange-red' : 'bg-whitish'}`} onClick={() => setIsLogin(false)} style={{ backgroundColor: `${!isLogin ? '#FF5700' : '#fefefe'}` }}>Signup</span>
         </div>
         <div className="form-container">
-          <form className="form" onSubmit={handleSubmit}>
+          <form className="form" onSubmit={handleSubmit} encType="mlutipart/form-data" >
             {!isLogin && (
               <div className="form-control">
-                <input onChange={handleChange} type="text" name="name" value={formData.name} placeholder="Name" />
+                <input onChange={handleChange} type="text" name="name" value={form.name || ''} placeholder="Name" required min="3" max="20" />
               </div>
             )}
             <div className="form-control">
-              <input onChange={handleChange} type="email" name="email" value={formData.email} placeholder="Email" style={{ marginTop: `${isLogin ? '1.5rem' : ''}` }} />
+              <input onChange={handleChange} type="email" name="email" value={form.email || ''} placeholder="Email" style={{ marginTop: `${isLogin ? '1.5rem' : ''}` }} required min="6" max="30" />
             </div>
             <div className="form-control">
-              <input onChange={handleChange} type={`${showPsw ? 'text' : 'password'}`} name="password" value={formData.password} placeholder="Password" className="password-input" />
+              <input onChange={handleChange} type={`${showPsw ? 'text' : 'password'}`} name="password" value={form.password || ''} placeholder="Password" className="password-input" required min="6" max="20" />
               {showPsw ? (
                 <AiFillUnlock onClick={() => setShowPsw(!showPsw)} className="lock-icon" />
               ) : (
@@ -64,13 +99,12 @@ const Authentication = () => {
             </div>
             {!isLogin && (
               <div className="form-control-filebase">
-                <label htmlFor="fileInput">Choose a user image (optionnal) :</label>
-                <FileBase multiple={false} onDone={({ base64 }) => steFormData({ ...formData, image: base64 })} />
+                <input type="file" name="file" onChange={handleFileChange} value={file || ''} />
               </div>
             )}
-            {/* {isLogin && (
-              <span className="forgot-psw">Forgot password ?</span>
-            )} */}
+            {isLogin && (
+              <span className="forgot-psw" onClick={handleForgotPassword} >Forgot password ?</span>
+            )}
             <button type='submit'>Submit</button>
           </form>
         </div>
