@@ -13,7 +13,7 @@ import {
 import axios from 'axios'
 import '../../axios'
 
-const url = 'http://localhost:5000/auth'
+const url = '/auth'
 
 export const login = (form) => async (dispatch) => {
   dispatch({ type: SET_LOADING })

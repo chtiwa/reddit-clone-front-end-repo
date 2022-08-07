@@ -21,7 +21,7 @@ import {
 import '../../axios'
 import axios from 'axios'
 
-const url = 'http://localhost:5000/posts'
+const url = '/posts'
 
 export const setPage = (page) => (dispatch) => {
   dispatch({ type: SET_PAGE, payload: page })

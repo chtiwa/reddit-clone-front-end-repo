@@ -26,7 +26,7 @@ const Pagination = ({ setCreator }) => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [])
+  }, [page])
 
   let array = []
   for (let i = 0; i < pages; i++) {
