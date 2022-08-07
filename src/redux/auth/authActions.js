@@ -13,7 +13,7 @@ import {
 import axios from 'axios'
 import '../../axios'
 
-const url = '/auth'
+const url = 'https://reddit-clone-cthiwa-backend.netlify.app/api/auth'
 
 export const login = (form) => async (dispatch) => {
   dispatch({ type: SET_LOADING })

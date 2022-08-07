@@ -21,7 +21,7 @@ import {
 import '../../axios'
 import axios from 'axios'
 
-const url = '/posts'
+const url = 'https://reddit-clone-cthiwa-backend.netlify.app/api/posts'
 
 export const setPage = (page) => (dispatch) => {
   dispatch({ type: SET_PAGE, payload: page })
